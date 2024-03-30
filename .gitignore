@@ -1,0 +1,14 @@
+*.o
+*.ko
+*.i
+*.s
+*.mod
+*.mod.*
+*.cmd
+Module.symvers
+modules.order
+a.out
+
+!.git*
+
+*.swp
