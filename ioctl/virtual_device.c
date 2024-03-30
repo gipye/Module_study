@@ -34,6 +34,9 @@ long virtual_device_ioctl(struct file *filp, unsigned int cmd, unsigned long arg
 	return 0;
 }
 
+/**
+ * 커스텀 연산을 등록한 구조체 생성
+ */
 static struct file_operations vd_fops = {
 	.owner = THIS_MODULE,
 	.open = virtual_device_open,
@@ -41,8 +44,12 @@ static struct file_operations vd_fops = {
 	.unlocked_ioctl = virtual_device_ioctl,
 };
 
+/**
+ * 모듈 초기화 루틴 함수
+ */
 int __init virtual_device_init(void)
 {
+	/* 커스텀 연산 구조체를 적용한 문자 디바이스 생성 */
 	int result = register_chrdev(0, "virtual_device", &vd_fops);
 	if (result < 0) {
 		printk( KERN_ALERT "driver init failed\n" );
@@ -54,12 +61,16 @@ int __init virtual_device_init(void)
 	return 0;
 }
 
+/**
+ * 모듈 종료 루틴 함수
+ */
 void __exit virtual_device_exit(void)
 {
 	unregister_chrdev(major, "virtual_device");
 	printk( KERN_ALERT "driver cleanup successful\n" );
 }
 
+/* 초기화, 종료 루틴 함수 등록 */
 module_init(virtual_device_init);
 module_exit(virtual_device_exit);
 
