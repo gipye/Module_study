@@ -43,13 +43,13 @@ int __init simple_init(void)
 	 * 0: 권한설정 (0으로 설정하면 기본값으로 0444)
 	 * NULL: 상위 디렉토리 지정 (NULL이면 /proc)
 	 */
-	simple_proc = create_proc_entry("simple", 0, NULL);
+	simple_proc = proc_create("simple", 0, NULL);
 	if (simple_proc = NULL)
 		return -ENOMEM;
 
 	simple_proc->data = buf;
 	simple_proc->read_proc = my_read;
-	simple_proc->write_proc = write;
+	simple_proc->write_proc = my_write;
 	simple_proc->owner = THIS_MODULE;
 
 	return 0;
